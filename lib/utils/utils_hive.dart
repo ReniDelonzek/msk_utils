@@ -22,6 +22,13 @@ class UtilsHive {
     return _instance;
   }
 
+  dispose() async {
+    if (!completer.isCompleted) {
+      await completer.future;
+    }
+    return await Hive.close();
+  }
+
   initHive({String path}) async {
     if (!completer.isCompleted) {
       if (path != null) {
@@ -54,7 +61,9 @@ class UtilsHive {
       return (Hive.isBoxOpen(name) ? Hive.box(name) : await Hive.openBox(name));
     } catch (error, stackTrace) {
       UtilsSentry.reportError(error, stackTrace);
-      await Hive.deleteBoxFromDisk(name);
+      try {
+        await Hive.deleteBoxFromDisk(name);
+      } catch (error) {}
       return (Hive.isBoxOpen(name) ? Hive.box(name) : await Hive.openBox(name));
     }
   }

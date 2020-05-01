@@ -1,16 +1,31 @@
 import 'dart:io';
+import 'dart:async';
 
 import 'package:device_info/device_info.dart';
 import 'package:sentry/sentry.dart';
+import 'package:flutter/widgets.dart';
 
 import 'utils_platform.dart';
 
 class UtilsSentry {
+  static void configureSentry() {
+    FlutterError.onError =
+        (FlutterErrorDetails details, {bool forceReport = false}) {
+      if (!UtilsPlatform.isRelease() && (!UtilsPlatform.isWindows())) {
+        // In development mode, simply print to console.
+        FlutterError.dumpErrorToConsole(details);
+      } else {
+        // In production mode, report to the application zone to report to Sentry.
+        Zone.current.handleUncaughtError(details.exception, details.stack);
+      }
+    };
+  }
+
   static Future<Event> getSentryEnvEvent(
       dynamic exception, dynamic stackTrace) async {
     /// return Event with IOS extra information to send it to Sentry
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    
+
     if (Platform.isIOS) {
       final IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
       return Event(
