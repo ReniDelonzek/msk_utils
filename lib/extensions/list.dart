@@ -7,7 +7,7 @@ extension ExList on List {
     int max = 0;
     this.forEach((element) {
       int pMax = collumMax(element);
-      if (max != null) {
+      if (pMax != null) {
         if (pMax > max) {
           max = pMax;
         }
@@ -20,7 +20,7 @@ extension ExList on List {
     double max = 0;
     this.forEach((element) {
       double pMax = collumMax(element);
-      if (max != null) {
+      if (pMax != null) {
         if (pMax > max) {
           max = pMax;
         }
