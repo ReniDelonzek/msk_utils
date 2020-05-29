@@ -11,6 +11,9 @@ class BaseCadastroConst {
   static const REGISTRO_SALVAR_ALTERAR = 5;
   static const REGISTRO_N_EDITAVEL = 6;
 
+  static const TIPO_CADASTRO_SALVAR = 1;
+  static const TIPO_CADASTRO_RETORNAR_DADOS = 2;
+
   static bool deletavel(int status) {
     return status == REGISTRO_DELETAR_ALTERAR || status == REGISTRO_DELETAR;
   }

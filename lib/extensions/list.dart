@@ -3,7 +3,8 @@ typedef CollumMax<T> = int Function(T obj);
 typedef CollumMaxDouble<T> = double Function(T obj);
 
 extension ExList on List {
-  int getMax(CollumMax collumMax) {
+  int getMax(CollumMax collumMax, {int defaultValue}) {
+    if (this.isEmpty) return defaultValue;
     int max = 0;
     this.forEach((element) {
       int pMax = collumMax(element);

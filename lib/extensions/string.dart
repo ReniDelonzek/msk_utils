@@ -5,6 +5,10 @@ extension St on String {
     return double.tryParse(this.replaceAll(',', '.')) ?? defaultValue ?? 0.0;
   }
 
+  double toDoubleOrNull() {
+    return double.tryParse(this.replaceAll(',', '.'));
+  }
+
   int toInt({int defaultValue}) {
     //faz um to double, pq se tentar dar um parse em um decimal direto pra int resulta em erro
     return this.toDouble(defaultValue: defaultValue?.toDouble() ?? 0.0).toInt();
