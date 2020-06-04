@@ -2,6 +2,8 @@ typedef CollumMax<T> = int Function(T obj);
 
 typedef CollumMaxDouble<T> = double Function(T obj);
 
+typedef CollumSumDouble<T> = double Function(T obj);
+
 extension ExList on List {
   int getMax(CollumMax collumMax, {int defaultValue}) {
     if (this.isEmpty) return defaultValue;
@@ -28,5 +30,16 @@ extension ExList on List {
       }
     });
     return max;
+  }
+
+  double sumByDouble(CollumSumDouble collum) {
+    double sum = 0;
+    this?.forEach((element) {
+      double c = collum(element);
+      if (c != null) {
+        sum += c;
+      }
+    });
+    return sum;
   }
 }

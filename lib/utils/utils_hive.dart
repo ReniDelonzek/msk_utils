@@ -16,7 +16,9 @@ class UtilsHive {
     _instance ??= UtilsHive._internalConstructor(adapters);
     return _instance;
   }
-  UtilsHive._internalConstructor(this.adapters);
+  UtilsHive._internalConstructor(this.adapters) {
+    initHive();
+  }
 
   static UtilsHive getInstance({List<TypeAdapter> adapters}) {
     _instance ??= UtilsHive._internalConstructor(adapters ?? []);
