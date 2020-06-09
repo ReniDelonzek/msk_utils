@@ -11,7 +11,7 @@ extension ExList on List {
     this.forEach((element) {
       int pMax = collumMax(element);
       if (pMax != null) {
-        if (pMax > max) {
+        if (max == null || pMax > max) {
           max = pMax;
         }
       }
