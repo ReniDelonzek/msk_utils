@@ -54,7 +54,8 @@ class UtilsSentry {
           'utsname': iosDeviceInfo.utsname.sysname,
           'identifierForVendor': iosDeviceInfo.identifierForVendor,
           'isPhysicalDevice': iosDeviceInfo.isPhysicalDevice,
-          'version': UtilsSentry.version
+          'version': UtilsSentry.version,
+          'package': package
         },
         exception: exception,
         stackTrace: stackTrace,
@@ -83,6 +84,7 @@ class UtilsSentry {
           'supported64BitAbis': androidDeviceInfo.supported64BitAbis,
           'supportedAbis': androidDeviceInfo.supportedAbis,
           'isPhysicalDevice': androidDeviceInfo.isPhysicalDevice,
+          'package': package,
           'version': UtilsSentry.version ??
               packageInfo?.version ??
               androidDeviceInfo.version.codename
@@ -99,7 +101,8 @@ class UtilsSentry {
         stackTrace: stackTrace,
         extra: {
           'platform': Platform.operatingSystem,
-          'version': UtilsSentry.version
+          'version': UtilsSentry.version,
+          'package': package
         });
   }
 
