@@ -8,10 +8,22 @@ import 'package:flutter/widgets.dart';
 import 'utils_platform.dart';
 
 class UtilsSentry {
-  static void configureSentry() {
+  static String dsn =
+      'https://4e841b37a9f7415283450cc4157c4ce4@o408228.ingest.sentry.io/5278728';
+  static String package;
+  static String version;
+
+  /// Inicializa o sentry com alguns dados relevantes, como dsn, o pacote e a versão
+  init(String dsn, String package, String version) {
+    UtilsSentry.dsn = dsn;
+    UtilsSentry.package = package;
+    UtilsSentry.version = version;
+  }
+
+  static void configureSentry({String dsn}) {
     FlutterError.onError =
         (FlutterErrorDetails details, {bool forceReport = false}) {
-      if (!UtilsPlatform.isRelease() && (!UtilsPlatform.isWindows())) {
+      if (UtilsPlatform.isDebug()) {
         // In development mode, simply print to console.
         FlutterError.dumpErrorToConsole(details);
       } else {
@@ -29,7 +41,7 @@ class UtilsSentry {
     if (Platform.isIOS) {
       final IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
       return Event(
-        release: '1.4',
+        release: UtilsSentry.version ?? '0.0',
         environment: 'production', // replace it as it's desired
         extra: <String, dynamic>{
           'name': iosDeviceInfo.name,
@@ -40,6 +52,7 @@ class UtilsSentry {
           'utsname': iosDeviceInfo.utsname.sysname,
           'identifierForVendor': iosDeviceInfo.identifierForVendor,
           'isPhysicalDevice': iosDeviceInfo.isPhysicalDevice,
+          'version': UtilsSentry.version
         },
         exception: exception,
         stackTrace: stackTrace,
@@ -63,42 +76,40 @@ class UtilsSentry {
           'hardware': androidDeviceInfo.hardware,
           'manufacturer': androidDeviceInfo.manufacturer,
           'product': androidDeviceInfo.product,
-          'version': androidDeviceInfo.version.release,
           'supported32BitAbis': androidDeviceInfo.supported32BitAbis,
           'supported64BitAbis': androidDeviceInfo.supported64BitAbis,
           'supportedAbis': androidDeviceInfo.supportedAbis,
           'isPhysicalDevice': androidDeviceInfo.isPhysicalDevice,
+          'version': UtilsSentry.version
         },
         exception: exception,
         stackTrace: stackTrace,
       );
     }
 
-    /// Return standard Error in case of non-specifed paltform
-    ///
-    /// if there is no detected platform,
-    /// just return a normal event with no extra information
     return Event(
-      release: '1.7',
-      environment: 'production',
-      exception: exception,
-      stackTrace: stackTrace,
-    );
+        release: UtilsSentry.version ?? '0.0',
+        environment: 'production',
+        exception: exception,
+        stackTrace: stackTrace,
+        extra: {
+          'platform': Platform.operatingSystem,
+          'version': UtilsSentry.version
+        });
   }
 
   static Future<void> reportError(Object error, StackTrace stackTrace,
-      {dynamic data}) async {
-    if (UtilsPlatform.isDebug() || UtilsPlatform.isWindows()) {
+      {dynamic data, String dsn}) async {
+    if (UtilsPlatform.isDebug()) {
       // In development mode, simply print to console.
-      print('No Sending report to sentry.io as mode is debugging DartError');
       // Print the full stacktrace in debug mode.
       print(error);
       print(stackTrace);
       return;
     } else {
       try {
-        final SentryClient sentry = new SentryClient(
-            dsn: 'https://10d8010b11f8485e9a2d1f4e11b00c1d@sentry.io/2272790');
+        final SentryClient sentry =
+            new SentryClient(dsn: dsn ?? UtilsSentry.dsn);
         // In production mode, report to the application zone to report to Sentry.
         final Event event = await getSentryEnvEvent(error, stackTrace);
         if (event.extra != null) {
