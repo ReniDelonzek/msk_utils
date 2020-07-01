@@ -9,7 +9,7 @@ environment:
   flutter: ">=1.10.0"
 
 dependencies:
-  package_info: ^0.4.0+16
+  package_info: ^0.4.1
   
   sprintf: ^4.0.2
   sentry: ^3.0.1

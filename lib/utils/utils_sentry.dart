@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:device_info/device_info.dart';
+import 'package:package_info/package_info.dart';
 import 'package:sentry/sentry.dart';
 import 'package:flutter/widgets.dart';
 
@@ -39,9 +40,10 @@ class UtilsSentry {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
     if (Platform.isIOS) {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
       final IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
       return Event(
-        release: UtilsSentry.version ?? '0.0',
+        release: UtilsSentry.version ?? packageInfo?.version ?? '0.0',
         environment: 'production', // replace it as it's desired
         extra: <String, dynamic>{
           'name': iosDeviceInfo.name,
@@ -61,9 +63,10 @@ class UtilsSentry {
 
     /// return Event with Andriod extra information to send it to Sentry
     if (Platform.isAndroid) {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
       final AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
       return Event(
-        release: androidDeviceInfo.version.codename,
+        release: packageInfo?.version ?? androidDeviceInfo.version.codename,
         environment: 'production', // replace it as it's desired
         extra: <String, dynamic>{
           'type': androidDeviceInfo.type,
@@ -80,7 +83,7 @@ class UtilsSentry {
           'supported64BitAbis': androidDeviceInfo.supported64BitAbis,
           'supportedAbis': androidDeviceInfo.supportedAbis,
           'isPhysicalDevice': androidDeviceInfo.isPhysicalDevice,
-          'version': UtilsSentry.version
+          'version': UtilsSentry.version ?? androidDeviceInfo.version.codename
         },
         exception: exception,
         stackTrace: stackTrace,
