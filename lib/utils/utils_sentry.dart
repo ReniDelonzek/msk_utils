@@ -83,7 +83,9 @@ class UtilsSentry {
           'supported64BitAbis': androidDeviceInfo.supported64BitAbis,
           'supportedAbis': androidDeviceInfo.supportedAbis,
           'isPhysicalDevice': androidDeviceInfo.isPhysicalDevice,
-          'version': UtilsSentry.version ?? androidDeviceInfo.version.codename
+          'version': UtilsSentry.version ??
+              packageInfo?.version ??
+              androidDeviceInfo.version.codename
         },
         exception: exception,
         stackTrace: stackTrace,
