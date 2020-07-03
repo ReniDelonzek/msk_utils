@@ -13,6 +13,12 @@ class ItemSelect extends _ItemSelect with _$ItemSelect {
     item.isSelected = isSelected;
     return item;
   }
+
+  //Utilitário para crud
+  /// Indica se o registro deve ser salvo ou não
+  bool save() {
+    return deletado != true || (id != 0 && id != null);
+  }
 }
 
 abstract class _ItemSelect with Store {

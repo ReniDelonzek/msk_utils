@@ -15,7 +15,7 @@ class UtilsSentry {
   static String version;
 
   /// Inicializa o sentry com alguns dados relevantes, como dsn, o pacote e a versão
-  init(String dsn, String package, String version) {
+  static init(String dsn, String package, String version) {
     UtilsSentry.dsn = dsn;
     UtilsSentry.package = package;
     UtilsSentry.version = version;
