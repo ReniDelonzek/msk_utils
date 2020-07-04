@@ -1,6 +1,7 @@
-import 'dart:io' show Platform;
+import 'dart:io' show Platform, Process, ProcessResult;
 
 import 'package:flutter/foundation.dart' as Foundation;
+import 'package:msk_utils/utils/utils_sentry.dart';
 
 class UtilsPlatform {
   static bool isDebug() {
@@ -30,5 +31,19 @@ class UtilsPlatform {
 
   static isWindows() {
     return (!Foundation.kIsWeb && Platform.isWindows);
+  }
+
+  static Future<ProcessResult> openProcess(String command,
+      {List<String> args}) async {
+    try {
+      if (args != null) {
+        return await Process.run(command, args);
+      } else {
+        return await Process.run(command, []);
+      }
+    } catch (error, stackTrace) {
+      UtilsSentry.reportError(error, stackTrace);
+      return null;
+    }
   }
 }
