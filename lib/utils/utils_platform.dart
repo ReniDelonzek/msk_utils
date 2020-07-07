@@ -34,12 +34,12 @@ class UtilsPlatform {
   }
 
   static Future<ProcessResult> openProcess(String command,
-      {List<String> args}) async {
+      {List<String> args, bool runInShell = true}) async {
     try {
       if (args != null) {
-        return await Process.run(command, args);
+        return await Process.run(command, args, runInShell: runInShell);
       } else {
-        return await Process.run(command, []);
+        return await Process.run(command, [], runInShell: runInShell);
       }
     } catch (error, stackTrace) {
       UtilsSentry.reportError(error, stackTrace);
