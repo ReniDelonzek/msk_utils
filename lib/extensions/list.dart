@@ -4,7 +4,7 @@ typedef CollumMaxDouble<T> = double Function(T obj);
 
 typedef CollumSumDouble<T> = double Function(T obj);
 
-extension ExList on List {
+extension ExList<E> on Iterable<E> {
   int getMax(CollumMax collumMax, {int defaultValue}) {
     if (this.isEmpty) return defaultValue;
     int max = 0;
@@ -42,4 +42,7 @@ extension ExList on List {
     });
     return sum;
   }
+
+  Iterable<E> sortedBy(Comparable key(E e)) =>
+      toList()..sort((a, b) => key(a).compareTo(key(b)));
 }
