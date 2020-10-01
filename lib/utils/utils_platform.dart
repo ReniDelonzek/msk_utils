@@ -33,6 +33,14 @@ class UtilsPlatform {
     return (!Foundation.kIsWeb && Platform.isWindows);
   }
 
+  static isAndroid() {
+    return (!Foundation.kIsWeb && Platform.isAndroid);
+  }
+
+  static isIOS() {
+    return (!Foundation.kIsWeb && Platform.isIOS);
+  }
+
   static Future<ProcessResult> openProcess(String command,
       {List<String> args, bool runInShell = true}) async {
     try {
