@@ -2,9 +2,9 @@ package io.flutter.plugins;
 
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugins.deviceinfo.DeviceInfoPlugin;
+import br.com.msk.msk_utils.MskUtilsPlugin;
 import io.flutter.plugins.packageinfo.PackageInfoPlugin;
 import io.flutter.plugins.pathprovider.PathProviderPlugin;
-import br.com.msk.msk_utils.MskUtilsPlugin;
 
 /**
  * Generated file. Do not edit.
@@ -15,9 +15,9 @@ public final class GeneratedPluginRegistrant {
       return;
     }
     DeviceInfoPlugin.registerWith(registry.registrarFor("io.flutter.plugins.deviceinfo.DeviceInfoPlugin"));
+    MskUtilsPlugin.registerWith(registry.registrarFor("br.com.msk.msk_utils.MskUtilsPlugin"));
     PackageInfoPlugin.registerWith(registry.registrarFor("io.flutter.plugins.packageinfo.PackageInfoPlugin"));
     PathProviderPlugin.registerWith(registry.registrarFor("io.flutter.plugins.pathprovider.PathProviderPlugin"));
-    MskUtilsPlugin.registerWith(registry.registrarFor("br.com.msk.msk_utils.MskUtilsPlugin"));
   }
 
   private static boolean alreadyRegisteredWith(PluginRegistry registry) {

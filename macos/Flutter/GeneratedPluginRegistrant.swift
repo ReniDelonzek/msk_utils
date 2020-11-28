@@ -5,12 +5,12 @@
 import FlutterMacOS
 import Foundation
 
+import msk_utils
 import package_info
 import path_provider_macos
-import msk_utils
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
+  MskUtilsPlugin.register(with: registry.registrar(forPlugin: "MskUtilsPlugin"))
   FLTPackageInfoPlugin.register(with: registry.registrar(forPlugin: "FLTPackageInfoPlugin"))
   PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))
-  MskUtilsPlugin.register(with: registry.registrar(forPlugin: "MskUtilsPlugin"))
 }
