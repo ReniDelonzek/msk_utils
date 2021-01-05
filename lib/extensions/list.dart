@@ -46,4 +46,11 @@ extension ExList<E> on Iterable<E> {
   /// Sort list use to Comparable colums
   Iterable<E> sortedBy(Comparable key(E e)) =>
       toList()..sort((a, b) => key(a).compareTo(key(b)));
+
+  E get firstOrNull {
+    if (this == null || this.isEmpty)
+      return null;
+    else
+      return this.first;
+  }
 }
