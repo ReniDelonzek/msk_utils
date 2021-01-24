@@ -6,4 +6,11 @@ class Navigation {
         builder: (BuildContext context) => widget,
         settings: RouteSettings(arguments: args)));
   }
+
+  static pushReplacement(BuildContext context, Widget widget,
+      {dynamic args}) async {
+    return await Navigator.of(context).pushReplacement(new MaterialPageRoute(
+        builder: (BuildContext context) => widget,
+        settings: RouteSettings(arguments: args)));
+  }
 }
