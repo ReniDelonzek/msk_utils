@@ -7,8 +7,8 @@ class ItemSelect<T> extends _ItemSelect with _$ItemSelect {
       {int id,
       T object,
       Map<String, dynamic> strings,
-      bool isSelected,
-      bool deletado})
+      bool isSelected = false,
+      bool deletado = false})
       : super(
             id: id,
             deletado: deletado,
