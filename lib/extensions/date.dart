@@ -13,9 +13,11 @@ extension Date on DateTime {
 
   String stringOrNull(String format, {String defaultValue}) {
     try {
+      if (this == null) {
+        return null;
+      }
       return DateFormat(format).format(this);
-    } catch (e, stackTrace) {
-      UtilsSentry.reportError(e, stackTrace);
+    } catch (e) {
       return defaultValue;
     }
   }
