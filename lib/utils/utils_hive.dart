@@ -39,7 +39,7 @@ class UtilsHive {
       } else {
         if (UtilsPlatform.isDesktop()) {
           Hive.init("${Directory.current.path}/data/.hive_db");
-        } else {
+        } else if (UtilsPlatform.isMobile()) {
           var dir = await getApplicationDocumentsDirectory();
           Hive.init(dir.path);
         }
