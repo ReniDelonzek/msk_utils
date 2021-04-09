@@ -14,7 +14,7 @@ dependencies:
   sprintf: ^4.0.2
   sentry: ^3.0.1
   device_info: ^1.0.0
-  path_provider: ^1.6.5
+  path_provider: 2.0.1
   hive: ^1.4.1+1
   dio: ^3.0.9
   intl: ^0.16.1
