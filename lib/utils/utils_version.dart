@@ -6,7 +6,7 @@ class UtilsVersion {
   static const VERSION = 9;
 
   static Future<int> getVersion() async {
-    if (UtilsPlatform.isMobile()) {
+    if (UtilsPlatform.isMobile) {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       return packageInfo.buildNumber.toInt();
     }
@@ -14,7 +14,7 @@ class UtilsVersion {
   }
 
   static Future<Map> getDataVersion() async {
-    if (UtilsPlatform.isMobile()) {
+    if (UtilsPlatform.isMobile) {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       return {
         'pacote': packageInfo.packageName,

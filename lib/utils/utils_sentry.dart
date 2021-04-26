@@ -24,7 +24,7 @@ class UtilsSentry {
   static void configureSentry({String dsn}) {
     FlutterError.onError =
         (FlutterErrorDetails details, {bool forceReport = false}) {
-      if (UtilsPlatform.isDebug()) {
+      if (UtilsPlatform.isDebug) {
         // In development mode, simply print to console.
         FlutterError.dumpErrorToConsole(details);
       } else {
@@ -108,7 +108,7 @@ class UtilsSentry {
 
   static Future<void> reportError(Object error, StackTrace stackTrace,
       {dynamic data, String dsn}) async {
-    if (UtilsPlatform.isDebug()) {
+    if (UtilsPlatform.isDebug) {
       // In development mode, simply print to console.
       // Print the full stacktrace in debug mode.
       print(error);

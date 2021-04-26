@@ -4,42 +4,21 @@ import 'package:flutter/foundation.dart' as Foundation;
 import 'package:msk_utils/utils/utils_sentry.dart';
 
 class UtilsPlatform {
-  static bool isDebug() {
-    return Foundation.kDebugMode;
-  }
+  static const bool isDebug = Foundation.kDebugMode;
+  static const bool isRelease = Foundation.kDebugMode;
+  static const bool isProfile = Foundation.kDebugMode;
 
-  static bool isRelease() {
-    return Foundation.kReleaseMode;
-  }
+  static const bool isMobile =
+      !Foundation.kIsWeb && (Platform.isAndroid || Platform.isIOS);
+  static const bool isWeb = Foundation.kIsWeb;
+  static const bool isDesktop = !Foundation.kIsWeb &&
+      (Platform.isWindows || Platform.isMacOS || Platform.isLinux);
 
-  static bool isProfile() {
-    return Foundation.kProfileMode;
-  }
-
-  static isMobile() {
-    return (!Foundation.kIsWeb && (Platform.isAndroid || Platform.isIOS));
-  }
-
-  static isWeb() {
-    return (Foundation.kIsWeb);
-  }
-
-  static isDesktop() {
-    return (!Foundation.kIsWeb &&
-        (Platform.isWindows || Platform.isMacOS || Platform.isLinux));
-  }
-
-  static isWindows() {
-    return (!Foundation.kIsWeb && Platform.isWindows);
-  }
-
-  static isAndroid() {
-    return (!Foundation.kIsWeb && Platform.isAndroid);
-  }
-
-  static isIOS() {
-    return (!Foundation.kIsWeb && Platform.isIOS);
-  }
+  static const bool isWindows = !Foundation.kIsWeb && Platform.isWindows;
+  static const bool isMacos = !Foundation.kIsWeb && Platform.isMacOS;
+  static const bool isLinux = !Foundation.kIsWeb && Platform.isLinux;
+  static const bool isAndroid = !Foundation.kIsWeb && Platform.isAndroid;
+  static const bool isIOS = !Foundation.kIsWeb && Platform.isIOS;
 
   static Future<ProcessResult> openProcess(String command,
       {List<String> args, bool runInShell = true}) async {
