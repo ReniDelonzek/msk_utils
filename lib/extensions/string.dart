@@ -2,7 +2,9 @@ import 'package:intl/intl.dart';
 
 extension St on String {
   double toDouble({double defaultValue}) {
-    return double.tryParse(this.replaceAll(',', '.')) ?? defaultValue ?? 0.0;
+    return double.tryParse(this?.replaceAll(',', '.')?.trim()) ??
+        defaultValue ??
+        0.0;
   }
 
   double toDoubleOrNull() {

@@ -34,7 +34,7 @@ class UtilsHive {
 
   initHive({String path}) async {
     if (!completer.isCompleted) {
-      if (path != null) {
+      if (path != null && !UtilsPlatform.isWeb) {
         Hive.init(path);
       } else {
         if (UtilsPlatform.isDesktop) {
