@@ -1,7 +1,7 @@
 extension ExList<E> on Iterable<E> {
   /// Returns max int value in Irarable on [collum] specified
   /// If Iterable is null or empty, return [defaultValue]
-  int getMax(Function collum, {int defaultValue}) {
+  int getMax(int Function(E element) collum, {int defaultValue}) {
     if (this == null || this.isEmpty) return defaultValue;
     int max;
     this.forEach((element) {
@@ -17,7 +17,7 @@ extension ExList<E> on Iterable<E> {
 
   /// Returns max int value in Irarable on [collum] specified
   /// If Iterable is null or empty, return null
-  double getMaxDouble(Function collumMax) {
+  double getMaxDouble(double Function(E element) collumMax) {
     if (this.isEmpty) return null;
     double max;
     this.forEach((element) {
@@ -32,7 +32,7 @@ extension ExList<E> on Iterable<E> {
   }
 
   /// Sum values [collum] specified in Iterable
-  double sumByDouble(Function collum) {
+  double sumByDouble(double Function(E element) collum) {
     double sum = 0;
     this?.forEach((element) {
       double c = collum(element);
