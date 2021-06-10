@@ -5,8 +5,8 @@ import 'package:msk_utils/utils/utils_sentry.dart';
 
 class UtilsPlatform {
   static const bool isDebug = Foundation.kDebugMode;
-  static const bool isRelease = Foundation.kDebugMode;
-  static const bool isProfile = Foundation.kDebugMode;
+  static const bool isProfile = Foundation.kProfileMode;
+  static const bool isRelease = Foundation.kReleaseMode;
 
   static bool isMobile =
       !Foundation.kIsWeb && (Platform.isAndroid || Platform.isIOS);
