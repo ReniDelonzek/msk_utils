@@ -7,7 +7,7 @@ extension MapEx on Map {
       if (map[colunas[i]] != null) {
         map = map[colunas[i]];
       } else {
-        break;
+        return map[colunas[i]];
       }
     }
     return map[colunas.last];

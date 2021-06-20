@@ -57,4 +57,33 @@ extension ExList<E> on Iterable<E> {
     else
       return this.first;
   }
+
+  E get lastOrNull {
+    if (this == null || this.isEmpty)
+      return null;
+    else
+      return this.last;
+  }
+
+  E firstWhereOrNull(bool test(E element)) {
+    if (this == null || this.isEmpty) return null;
+    for (E element in this) {
+      if (test(element)) return element;
+    }
+    return null;
+  }
+
+  E lastWhereOrNull(bool test(E element)) {
+    if (this == null || this.isEmpty) return null;
+    E result;
+    bool foundMatching = false;
+    for (E element in this) {
+      if (test(element)) {
+        result = element;
+        foundMatching = true;
+      }
+    }
+    if (foundMatching) return result;
+    return null;
+  }
 }

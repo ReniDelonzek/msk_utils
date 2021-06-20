@@ -28,7 +28,7 @@ extension St on String {
     return string + this;
   }
 
-  bool isNullOrEmpty() {
+  bool get isNullOrEmpty {
     return this == null || this.isEmpty;
   }
 
