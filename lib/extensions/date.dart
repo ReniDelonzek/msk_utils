@@ -1,22 +1,23 @@
 import 'package:intl/intl.dart';
 import 'package:msk_utils/utils/utils_sentry.dart';
 
-extension Date on DateTime {
-  String string(String format, {String defaultValue}) {
+extension Date on DateTime? {
+  String string(String format, {String? defaultValue}) {
+    if (this == null) return defaultValue ?? '';
     try {
-      return DateFormat(format).format(this);
+      return DateFormat(format).format(this!);
     } catch (e, stackTrace) {
       UtilsSentry.reportError(e, stackTrace);
       return defaultValue ?? '';
     }
   }
 
-  String stringOrNull(String format, {String defaultValue}) {
+  String? stringOrNull(String format, {String? defaultValue}) {
     try {
       if (this == null) {
-        return null;
+        return defaultValue ?? null;
       }
-      return DateFormat(format).format(this);
+      return DateFormat(format).format(this!);
     } catch (e) {
       return defaultValue;
     }

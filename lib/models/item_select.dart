@@ -4,9 +4,9 @@ part 'item_select.g.dart';
 
 class ItemSelect<T> extends _ItemSelect with _$ItemSelect {
   ItemSelect(
-      {int id,
-      T object,
-      Map<String, dynamic> strings,
+      {int? id,
+      T? object,
+      Map<String, dynamic>? strings,
       bool isSelected = false,
       bool deletado = false})
       : super(
@@ -35,9 +35,9 @@ abstract class _ItemSelect<T> with Store {
     }
   }
 
-  int id;
-  T object;
-  Map<String, dynamic> strings = Map();
+  int? id;
+  T? object;
+  Map<String, dynamic>? strings = Map();
 
   @observable
   bool isSelected;

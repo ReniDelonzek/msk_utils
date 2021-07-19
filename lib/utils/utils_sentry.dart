@@ -11,8 +11,8 @@ import 'utils_platform.dart';
 class UtilsSentry {
   static String dsn =
       'https://4e841b37a9f7415283450cc4157c4ce4@o408228.ingest.sentry.io/5278728';
-  static String package;
-  static String version;
+  static String? package;
+  static String? version;
 
   /// Inicializa o sentry com alguns dados relevantes, como dsn, o pacote e a versão
   static init(String dsn, String package, String version) {
@@ -29,7 +29,7 @@ class UtilsSentry {
         FlutterError.dumpErrorToConsole(details);
       } else {
         // In production mode, report to the application zone to report to Sentry.
-        Zone.current.handleUncaughtError(details.exception, details.stack);
+        Zone.current.handleUncaughtError(details.exception, details.stack!);
       }
     };
   }
@@ -120,7 +120,7 @@ class UtilsSentry {
   }
 
   static Future<void> reportError(Object error, StackTrace stackTrace,
-      {dynamic data, String dsn}) async {
+      {dynamic data, String? dsn}) async {
     if (UtilsPlatform.isDebug) {
       // In development mode, simply print to console.
       // Print the full stacktrace in debug mode.
@@ -134,7 +134,7 @@ class UtilsSentry {
 
         final SentryEvent event = await getSentryEnvEvent(error, stackTrace);
         if (event.extra != null) {
-          event.extra['json'] = data;
+          event.extra!['json'] = data;
         }
         print('Sending report to sentry.io ${stackTrace.toString()}');
         await sentry.captureEvent(event);

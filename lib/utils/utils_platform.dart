@@ -20,8 +20,8 @@ class UtilsPlatform {
   static bool isAndroid = !Foundation.kIsWeb && Platform.isAndroid;
   static bool isIOS = !Foundation.kIsWeb && Platform.isIOS;
 
-  static Future<ProcessResult> openProcess(String command,
-      {List<String> args, bool runInShell = true}) async {
+  static Future<ProcessResult?> openProcess(String command,
+      {List<String>? args, bool runInShell = true}) async {
     try {
       if (args != null) {
         return await Process.run(command, args, runInShell: runInShell);

@@ -8,19 +8,19 @@ import 'package:path_provider/path_provider.dart';
 import 'utils_platform.dart';
 
 class UtilsHive {
-  static UtilsHive _instance;
+  static UtilsHive? _instance;
   Completer<bool> completer = Completer();
   List<TypeAdapter> adapters;
 
   factory UtilsHive(List<TypeAdapter> adapters) {
     _instance ??= UtilsHive._internalConstructor(adapters);
-    return _instance;
+    return _instance!;
   }
   UtilsHive._internalConstructor(this.adapters) {
     initHive();
   }
 
-  static UtilsHive getInstance({List<TypeAdapter> adapters}) {
+  static UtilsHive? getInstance({List<TypeAdapter>? adapters}) {
     _instance ??= UtilsHive._internalConstructor(adapters ?? []);
     return _instance;
   }
@@ -32,7 +32,7 @@ class UtilsHive {
     return await Hive.close();
   }
 
-  initHive({String path}) async {
+  initHive({String? path}) async {
     if (!completer.isCompleted) {
       if (path != null && !UtilsPlatform.isWeb) {
         Hive.init(path);
