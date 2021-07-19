@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:async';
 
-import 'package:device_info/device_info.dart';
-import 'package:package_info/package_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry/sentry.dart';
 import 'package:flutter/widgets.dart';
 
@@ -21,7 +21,7 @@ class UtilsSentry {
     UtilsSentry.version = version;
   }
 
-  static void configureSentry({String dsn}) {
+  static void configureSentry() {
     FlutterError.onError =
         (FlutterErrorDetails details, {bool forceReport = false}) {
       if (UtilsPlatform.isDebug) {
@@ -34,76 +34,89 @@ class UtilsSentry {
     };
   }
 
-  static Future<Event> getSentryEnvEvent(
+  static Future<SentryEvent> getSentryEnvEvent(
       dynamic exception, dynamic stackTrace) async {
     /// return Event with IOS extra information to send it to Sentry
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-    if (Platform.isIOS) {
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    Map<String, dynamic> extra = {
+      'platform': Platform.operatingSystem,
+      'version': UtilsSentry.version,
+      'package': package
+    };
+
+    if (UtilsPlatform.isIOS) {
       final IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
-      return Event(
-        release: UtilsSentry.version ?? packageInfo?.version ?? '0.0',
-        environment: 'production', // replace it as it's desired
-        extra: <String, dynamic>{
-          'name': iosDeviceInfo.name,
-          'model': iosDeviceInfo.model,
-          'systemName': iosDeviceInfo.systemName,
-          'systemVersion': iosDeviceInfo.systemVersion,
-          'localizedModel': iosDeviceInfo.localizedModel,
-          'utsname': iosDeviceInfo.utsname.sysname,
-          'identifierForVendor': iosDeviceInfo.identifierForVendor,
-          'isPhysicalDevice': iosDeviceInfo.isPhysicalDevice,
-          'version': UtilsSentry.version,
-          'package': package
-        },
-        exception: exception,
-        stackTrace: stackTrace,
-      );
-    }
-
-    /// return Event with Andriod extra information to send it to Sentry
-    if (Platform.isAndroid) {
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      extra.addAll({
+        'name': iosDeviceInfo.name,
+        'model': iosDeviceInfo.model,
+        'systemName': iosDeviceInfo.systemName,
+        'systemVersion': iosDeviceInfo.systemVersion,
+        'localizedModel': iosDeviceInfo.localizedModel,
+        'utsname': iosDeviceInfo.utsname.sysname,
+        'identifierForVendor': iosDeviceInfo.identifierForVendor,
+        'isPhysicalDevice': iosDeviceInfo.isPhysicalDevice,
+        'version': UtilsSentry.version,
+        'package': package
+      });
+    } else if (UtilsPlatform.isAndroid) {
       final AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-      return Event(
-        release: packageInfo?.version ?? androidDeviceInfo.version.codename,
-        environment: 'production', // replace it as it's desired
-        extra: <String, dynamic>{
-          'type': androidDeviceInfo.type,
-          'model': androidDeviceInfo.model,
-          'device': androidDeviceInfo.device,
-          'id': androidDeviceInfo.id,
-          'androidId': androidDeviceInfo.androidId,
-          'brand': androidDeviceInfo.brand,
-          'display': androidDeviceInfo.display,
-          'hardware': androidDeviceInfo.hardware,
-          'manufacturer': androidDeviceInfo.manufacturer,
-          'product': androidDeviceInfo.product,
-          'supported32BitAbis': androidDeviceInfo.supported32BitAbis,
-          'supported64BitAbis': androidDeviceInfo.supported64BitAbis,
-          'supportedAbis': androidDeviceInfo.supportedAbis,
-          'isPhysicalDevice': androidDeviceInfo.isPhysicalDevice,
-          'package': package,
-          'version': UtilsSentry.version ??
-              packageInfo?.version ??
-              androidDeviceInfo.version.codename
-        },
-        exception: exception,
-        stackTrace: stackTrace,
-      );
+      extra.addAll({
+        'type': androidDeviceInfo.type,
+        'model': androidDeviceInfo.model,
+        'device': androidDeviceInfo.device,
+        'id': androidDeviceInfo.id,
+        'androidId': androidDeviceInfo.androidId,
+        'brand': androidDeviceInfo.brand,
+        'display': androidDeviceInfo.display,
+        'hardware': androidDeviceInfo.hardware,
+        'manufacturer': androidDeviceInfo.manufacturer,
+        'product': androidDeviceInfo.product,
+        'supported32BitAbis': androidDeviceInfo.supported32BitAbis,
+        'supported64BitAbis': androidDeviceInfo.supported64BitAbis,
+        'supportedAbis': androidDeviceInfo.supportedAbis,
+        'isPhysicalDevice': androidDeviceInfo.isPhysicalDevice,
+        'package': package,
+        'version': androidDeviceInfo.version.codename
+      });
+    } else if (UtilsPlatform.isMacos) {
+      final MacOsDeviceInfo macOsDeviceInfo = await deviceInfo.macOsInfo;
+      extra.addAll(macOsDeviceInfo.toMap());
+    } else if (UtilsPlatform.isWindows) {
+      final WindowsDeviceInfo windowsDeviceInfo = await deviceInfo.windowsInfo;
+      extra.addAll({
+        'computerName': windowsDeviceInfo.computerName,
+        'numberOfCores': windowsDeviceInfo.numberOfCores,
+        'systemMemoryInMegabytes': windowsDeviceInfo.systemMemoryInMegabytes
+      });
+    } else if (UtilsPlatform.isLinux) {
+      final LinuxDeviceInfo linuxDeviceInfo = await deviceInfo.linuxInfo;
+      extra.addAll({
+        'buildId': linuxDeviceInfo.buildId,
+        'id': linuxDeviceInfo.id,
+        'machineId': linuxDeviceInfo.machineId,
+        'name': linuxDeviceInfo.name,
+        'version': linuxDeviceInfo.version,
+        'versionId': linuxDeviceInfo.versionId,
+      });
+    } else if (UtilsPlatform.isWeb) {
+      final WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+      extra.addAll({
+        'browserName': webBrowserInfo.browserName,
+        'deviceMemory': webBrowserInfo.deviceMemory,
+        'language': webBrowserInfo.language,
+        'hardwareConcurrency': webBrowserInfo.hardwareConcurrency,
+        'platform': webBrowserInfo.platform
+      });
     }
 
-    return Event(
-        release: UtilsSentry.version ?? '0.0',
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return SentryEvent(
+        release: packageInfo.version,
         environment: 'production',
         exception: exception,
         stackTrace: stackTrace,
-        extra: {
-          'platform': Platform.operatingSystem,
-          'version': UtilsSentry.version,
-          'package': package
-        });
+        extra: extra);
   }
 
   static Future<void> reportError(Object error, StackTrace stackTrace,
@@ -117,14 +130,14 @@ class UtilsSentry {
     } else {
       try {
         final SentryClient sentry =
-            new SentryClient(dsn: dsn ?? UtilsSentry.dsn);
-        // In production mode, report to the application zone to report to Sentry.
-        final Event event = await getSentryEnvEvent(error, stackTrace);
+            new SentryClient(SentryOptions(dsn: dsn ?? UtilsSentry.dsn));
+
+        final SentryEvent event = await getSentryEnvEvent(error, stackTrace);
         if (event.extra != null) {
           event.extra['json'] = data;
         }
         print('Sending report to sentry.io ${stackTrace.toString()}');
-        await sentry.capture(event: event);
+        await sentry.captureEvent(event);
       } catch (e) {
         print('Sending report to sentry.io failed: $e');
         print('Original error: $error');
