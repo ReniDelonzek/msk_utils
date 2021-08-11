@@ -1,6 +1,6 @@
 name: msk_utils
 description: Flutter Application Utility
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/ReniDelonzek/msk_utils
 
 environment:
@@ -15,7 +15,7 @@ dependencies:
   path_provider: ^2.0.1
   hive: ^1.4.1+1
   dio: ^3.0.9
-  intl: ^0.16.1
+  intl: ^0.17.0
   mobx: ^1.1.0
   flutter_mobx: ^1.1.0+2
   flutter:
