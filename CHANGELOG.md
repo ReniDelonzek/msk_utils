@@ -9,3 +9,7 @@
 ## 0.0.3
 
 * Update intl
+
+## 0.0.4
+
+* Removed old code
