@@ -13,3 +13,7 @@
 ## 0.0.4
 
 * Removed old code
+
+## 0.0.4-dev.1
+
+* Migration to null safety
