@@ -21,3 +21,7 @@
 ## 0.0.5
 
 * Release null safety
+
+## 0.0.6
+
+* Update packages
