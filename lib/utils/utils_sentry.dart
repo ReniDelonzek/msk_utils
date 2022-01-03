@@ -114,8 +114,8 @@ class UtilsSentry {
     return SentryEvent(
         release: packageInfo.version,
         environment: 'production',
-        exception: exception,
-        stackTrace: stackTrace,
+        exceptions: [exception],
+        throwable: stackTrace,
         extra: extra);
   }
 
