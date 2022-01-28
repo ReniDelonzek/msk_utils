@@ -97,7 +97,7 @@ extension ExList<T> on List<T> {
   List<T> distinctBy(Function(T element) a) {
     HashSet idServers = new HashSet();
     List<T> newList = List.from(this);
-    for (int i = 0; i < this.length; i++) {
+    for (int i = 0; i < newList.length; i++) {
       final value = a(newList[i]);
       if (!idServers.add(value)) {
         /// Do the -- no i because removing an item from the list and not doing that it will skip the next one
