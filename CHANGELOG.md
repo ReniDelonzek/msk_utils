@@ -29,3 +29,7 @@
 ## 0.0.7
 
 * Add function distinctBy for list
+
+## 0.0.8
+
+* Fix function distinctBy for list
