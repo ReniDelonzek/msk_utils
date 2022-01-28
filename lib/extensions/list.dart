@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 extension ExListNotNull<E> on Iterable<E> {
   /// Sort list use to Comparable colums
   Iterable<E> sortedBy(Comparable? key(E? e)) =>
@@ -8,7 +10,7 @@ extension ExListNotNull<E> on Iterable<E> {
       toList()..sort((b, a) => key(a)?.compareTo(key(b)) ?? 1);
 }
 
-extension ExList<E> on Iterable<E>? {
+extension ExIterable<E> on Iterable<E>? {
   /// Returns max int value in Irarable on [collum] specified
   /// If Iterable is null or empty, return [defaultValue]
   int? getMax(int? Function(E? element) collum, {int? defaultValue}) {
@@ -87,5 +89,21 @@ extension ExList<E> on Iterable<E>? {
     }
     if (foundMatching) return result;
     return null;
+  }
+}
+
+extension ExList<T> on List<T> {
+  /// Returns a list of distinct elements
+  List<T> distinctBy(Function(T element) a) {
+    HashSet idServers = new HashSet();
+    List<T> newList = List.from(this);
+    for (int i = 0; i < this.length; i++) {
+      final value = a(newList[i]);
+      if (!idServers.add(value)) {
+        /// Do the -- no i because removing an item from the list and not doing that it will skip the next one
+        newList.removeAt(i--);
+      }
+    }
+    return newList;
   }
 }
