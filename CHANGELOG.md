@@ -25,3 +25,7 @@
 ## 0.0.6
 
 * Update packages
+
+## 0.0.7
+
+* Add function distinctBy for list
