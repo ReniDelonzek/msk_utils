@@ -1,7 +1,8 @@
 import 'dart:io' show Platform, Process, ProcessResult;
 
 import 'package:flutter/foundation.dart' as Foundation;
-import 'package:msk_utils/utils/utils_sentry.dart';
+
+import 'utils_sentry.dart';
 
 class UtilsPlatform {
   static const bool isDebug = Foundation.kDebugMode;

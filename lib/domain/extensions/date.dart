@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:msk_utils/utils/utils_sentry.dart';
+import 'package:msk_utils/msk_utils.dart';
 
 extension Date on DateTime? {
   String string(String format, {String? defaultValue}) {

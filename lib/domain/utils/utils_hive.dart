@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:hive/hive.dart';
-import 'package:msk_utils/utils/utils_sentry.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'utils_platform.dart';
+import 'utils_sentry.dart';
 
 class UtilsHive {
   static UtilsHive? _instance;

@@ -1,13 +1,13 @@
-export 'extensions/date.dart';
-export 'extensions/list.dart';
-export 'extensions/map.dart';
-export 'extensions/numbers.dart';
-export 'extensions/string.dart';
+export 'domain/extensions/date.dart';
+export 'domain/extensions/list.dart';
+export 'domain/extensions/map.dart';
+export 'domain/extensions/numbers.dart';
+export 'domain/extensions/string.dart';
 
-export 'models/item_select.dart';
-export 'utils/utils_hive.dart';
-export 'utils/utils_platform.dart';
-export 'utils/utils_query.dart';
-export 'utils/utils_sentry.dart';
-export 'utils/navigation.dart';
-export 'utils/utils_version.dart';
+export 'data/models/item_select.dart';
+export 'domain/utils/utils_hive.dart';
+export 'domain/utils/utils_platform.dart';
+export 'domain/utils/utils_query.dart';
+export 'domain/utils/utils_sentry.dart';
+export 'domain/utils/navigation.dart';
+export 'domain/utils/utils_version.dart';
