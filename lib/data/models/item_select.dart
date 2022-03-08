@@ -8,10 +8,10 @@ class ItemSelect<T> extends _ItemSelect with _$ItemSelect {
       T? object,
       Map<String, dynamic> strings = const {},
       bool isSelected = false,
-      bool deletado = false})
+      bool isDeleted = false})
       : super(
             id: id,
-            deletado: deletado,
+            isDeleted: isDeleted,
             object: object,
             strings: strings,
             isSelected: isSelected);
@@ -19,7 +19,7 @@ class ItemSelect<T> extends _ItemSelect with _$ItemSelect {
   /// Utilitário para crud
   /// Indica se o registro deve ser salvo ou nã
   bool save() {
-    return deletado != true || (id != 0 && id != null);
+    return isDeleted != true || (id != 0 && id != null);
   }
 }
 
@@ -29,7 +29,7 @@ abstract class _ItemSelect<T> with Store {
       this.object,
       this.strings = const {},
       this.isSelected = false,
-      this.deletado = false});
+      this.isDeleted = false});
 
   int? id;
   T? object;
@@ -38,5 +38,5 @@ abstract class _ItemSelect<T> with Store {
   @observable
   bool isSelected;
   @observable
-  bool deletado = false;
+  bool isDeleted = false;
 }

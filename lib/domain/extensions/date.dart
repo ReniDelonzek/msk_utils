@@ -15,7 +15,7 @@ extension Date on DateTime? {
   String? stringOrNull(String format, {String? defaultValue}) {
     try {
       if (this == null) {
-        return defaultValue ?? null;
+        return defaultValue;
       }
       return DateFormat(format).format(this!);
     } catch (e) {

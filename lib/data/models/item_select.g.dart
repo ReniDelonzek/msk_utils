@@ -24,18 +24,18 @@ mixin _$ItemSelect<T> on _ItemSelect<T>, Store {
     });
   }
 
-  final _$deletadoAtom = Atom(name: '_ItemSelect.deletado');
+  final _$isDeletedAtom = Atom(name: '_ItemSelect.isDeleted');
 
   @override
-  bool get deletado {
-    _$deletadoAtom.reportRead();
-    return super.deletado;
+  bool get isDeleted {
+    _$isDeletedAtom.reportRead();
+    return super.isDeleted;
   }
 
   @override
-  set deletado(bool value) {
-    _$deletadoAtom.reportWrite(value, super.deletado, () {
-      super.deletado = value;
+  set isDeleted(bool value) {
+    _$isDeletedAtom.reportWrite(value, super.isDeleted, () {
+      super.isDeleted = value;
     });
   }
 
@@ -43,7 +43,7 @@ mixin _$ItemSelect<T> on _ItemSelect<T>, Store {
   String toString() {
     return '''
 isSelected: ${isSelected},
-deletado: ${deletado}
+isDeleted: ${isDeleted}
     ''';
   }
 }

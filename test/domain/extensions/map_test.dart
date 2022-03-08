@@ -7,11 +7,15 @@ void main() {
       'person': {
         'name': 'Mike',
         'age': 22,
-        'address': {'street': 'xyz'}
+        'address': {'street': 'xyz',
+        'country': null
+        }
       }
     };
     expect(data.getLineValue('person/name'), 'Mike');
     expect(data.getLineValue('person/age'), 22);
     expect(data.getLineValue('person/address/street'), 'xyz');
+    expect(data.getLineValue('person/address/country'), isNull);
+    expect(data.getLineValue('person/address/country/name'), isNull);
   });
 }
