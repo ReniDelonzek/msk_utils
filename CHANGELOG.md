@@ -33,3 +33,7 @@
 ## 0.0.8
 
 * Fix function distinctBy for list
+
+## 1.0.0
+
+* Fix some issues and add tests 
