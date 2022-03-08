@@ -1,13 +1,29 @@
 import 'dart:collection';
 
+import 'package:msk_utils/domain/extensions/string.dart';
+
 extension ExListNotNull<E> on Iterable<E> {
   /// Sort list use to Comparable colums
-  Iterable<E> sortedBy(Comparable? key(E? e)) =>
-      toList()..sort((a, b) => key(a)?.compareTo(key(b)) ?? 1);
+  Iterable<E> sortedBy(Comparable? key(E e)) => toList()
+    ..sort((a, b) => (a != null && b != null ? key(a)!.compareTo(key(b)) : 0));
 
   /// Sort list desc use to Comparable colums
-  Iterable<E> sortedByDesc(Comparable? key(E? e)) =>
-      toList()..sort((b, a) => key(a)?.compareTo(key(b)) ?? 1);
+  Iterable<E> sortedByDesc(Comparable? key(E? e)) => toList()
+    ..sort((b, a) => (a != null && b != null ? key(a)!.compareTo(key(b)) : 0));
+
+  // Apply a distinct per specific column
+  List<E> distinctBy(Function(E element) a) {
+    HashSet idServers = new HashSet();
+    List<E> newList = List.from(this);
+    for (int i = 0; i < newList.length; i++) {
+      final value = a(newList[i]);
+      if (!idServers.add(value)) {
+        /// Do the -- no i because removing an item from the list and not doing that it will skip the next one
+        newList.removeAt(i--);
+      }
+    }
+    return newList;
+  }
 }
 
 extension ExIterable<E> on Iterable<E>? {
@@ -44,10 +60,26 @@ extension ExIterable<E> on Iterable<E>? {
   }
 
   /// Sum values [collum] specified in Iterable
-  double sumByDouble(double? Function(E? element) collum) {
+  double sumByDouble(double? Function(E? element) collum,
+      {int? fractionDigits}) {
     double sum = 0;
     this?.forEach((element) {
       double? c = collum(element);
+      if (c != null) {
+        sum += c;
+      }
+    });
+    if (fractionDigits != null) {
+      sum = sum.toStringAsFixed(fractionDigits).toDouble();
+    }
+    return sum;
+  }
+
+  /// Sum values [collum] specified in Iterable
+  double sumBy(int? Function(E? element) collum) {
+    double sum = 0;
+    this?.forEach((element) {
+      int? c = collum(element);
       if (c != null) {
         sum += c;
       }
@@ -89,21 +121,5 @@ extension ExIterable<E> on Iterable<E>? {
     }
     if (foundMatching) return result;
     return null;
-  }
-}
-
-extension ExList<T> on List<T> {
-  /// Returns a list of distinct elements
-  List<T> distinctBy(Function(T element) a) {
-    HashSet idServers = new HashSet();
-    List<T> newList = List.from(this);
-    for (int i = 0; i < newList.length; i++) {
-      final value = a(newList[i]);
-      if (!idServers.add(value)) {
-        /// Do the -- no i because removing an item from the list and not doing that it will skip the next one
-        newList.removeAt(i--);
-      }
-    }
-    return newList;
   }
 }

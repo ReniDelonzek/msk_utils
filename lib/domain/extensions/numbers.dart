@@ -1,7 +1,7 @@
 import 'package:sprintf/sprintf.dart';
 
-extension Numbers on num? {
-  String? string({int? casas}) {
-    return sprintf("%.${casas}f", [this?.toDouble() ?? 0.0]);
+extension NumbersExtension on num? {
+  String? string({int? decimalPlaces}) {
+    return sprintf("%.${decimalPlaces}f", [this?.toDouble() ?? 0.0]);
   }
 }

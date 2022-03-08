@@ -1,26 +1,34 @@
 import 'package:intl/intl.dart';
 
 extension StNotNull on String {
-  /// Adiciona zeros a esquerda de acordo com a [quantidade] indicada
-  String addZeros(int quantidade) {
-    var string = '';
-    for (int i = 0; i < quantidade; i++) {
+  /// Add leading zeros according to the indicated [quantity]
+  String addZeros(int quantity) {
+    String string = '';
+    for (int i = 0; i < quantity; i++) {
       string += "0";
     }
     return string + this;
   }
+
+  /// Add leading zeros if the string length is less than the indicated [length]
+  String addLeadingZerosLengthLessThan(int length) {
+    if (this.length >= length) {
+      return this;
+    }
+    return this.addZeros(length - this.length);
+  }
 }
 
 extension St on String? {
-  double toDouble({double? defaultValue}) {
+  /// Convert to double or [defaultValue]
+  double toDouble({double defaultValue = 0.0}) {
     if (this == null) {
-      return defaultValue ?? 0.0;
+      return defaultValue;
     }
-    return double.tryParse(this!.replaceAll(',', '.').trim()) ??
-        defaultValue ??
-        0.0;
+    return double.tryParse(this!.replaceAll(',', '.').trim()) ?? defaultValue;
   }
 
+  /// Convert to double or null
   double? toDoubleOrNull() {
     if (this == null) {
       return null;
@@ -28,19 +36,25 @@ extension St on String? {
     return double.tryParse(this!.replaceAll(',', '.'));
   }
 
-  /// Retorna um int da string
-  ///
-  /// [defaultValue] Caso o parse falhe, assume o valor indicado
-  int toInt({int? defaultValue}) {
+  /// Convert to int or [defaultValue]
+  int toInt({int defaultValue = 0}) {
     // Faz um toDouble, pq se tentar dar um parse em um decimal direto pra int resulta em erro
-    return this.toDouble(defaultValue: defaultValue?.toDouble() ?? 0.0).toInt();
+    return this.toDouble(defaultValue: defaultValue.toDouble()).toInt();
   }
 
+  /// Convert to int or null
+  int? toIntOrNull() {
+    if (this == null) return null;
+    // Faz um toDouble, pq se tentar dar um parse em um decimal direto pra int resulta em erro
+    return this.toDoubleOrNull()?.toInt();
+  }
+
+  /// Check if string is null or empty
   bool get isNullOrEmpty {
     return this == null || this!.isEmpty;
   }
 
-  /// Deixa a primeira letra da palavra em minusculo, e o restantante como estava
+  /// Leave the first letter of the word in lower case, and the rest as it was.
   String? lowerCaseFirst() {
     if (this != null) {
       if (this!.length > 1) {
@@ -57,19 +71,19 @@ extension St on String? {
       if (this!.length > 1) {
         return this!.substring(0, 1).toUpperCase() + this!.substring(1);
       } else
-        return this!.toLowerCase();
+        return this!.toUpperCase();
     } else
       return this;
   }
 
-  /// Deixa a primeira letra da palavra em maiusculo, e o restantante em minúsculo
+  /// Make the first letter of the word uppercase and the rest lowercase.
   String? upperCaseFirstLower() {
     if (this != null) {
       if (this!.length > 1) {
         return this!.substring(0, 1).toUpperCase() +
             this!.substring(1).toLowerCase();
       } else
-        return this!.toLowerCase();
+        return this!.toUpperCase();
     } else
       return this;
   }
@@ -79,9 +93,7 @@ extension St on String? {
     return this == null || this!.trim().isEmpty;
   }
 
-  /// Covente string para DateTime
-  ///
-  /// [format] Indica o formato que a data está
+  /// Convert string to dateTime, if fail, returns [defaultDate] or null
   DateTime? toDate(String format, {DateTime? defaultDate}) {
     if (this == null) return defaultDate ?? null;
     try {
@@ -92,10 +104,18 @@ extension St on String? {
     }
   }
 
-  /// Retorna a primeira palavra de uma string
+  /// Return firt word from string
   String? firstWord() {
     if (this != null) {
       return this!.split(' ').first;
+    } else
+      return this;
+  }
+
+  /// Return last word from string
+  String? lastWord() {
+    if (this != null) {
+      return this!.split(' ').last;
     } else
       return this;
   }
