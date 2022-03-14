@@ -1,6 +1,6 @@
 name: msk_utils
 description: Flutter utility package, with utilities for navigation, databases, and extensions for strings, maps, lists and more
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/ReniDelonzek/msk_utils
 
 environment:
@@ -8,7 +8,7 @@ environment:
   flutter: ">=1.10.0"
 
 dependencies:
-  package_info_plus: ^1.0.4
+  package_info_plus: "1.3.0"
   
   sprintf: ^6.0.0
   sentry: ^6.2.2

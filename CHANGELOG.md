@@ -37,3 +37,8 @@
 ## 1.0.0
 
 * Fix some issues and add tests 
+
+## 1.0.1
+
+* Downgrade package_info_plus to 1.3.0 (https://github.com/fluttercommunity/plus_plugins/issues/760)
+
