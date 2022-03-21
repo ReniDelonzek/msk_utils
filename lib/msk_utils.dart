@@ -11,3 +11,4 @@ export 'domain/utils/utils_query.dart';
 export 'domain/utils/utils_sentry.dart';
 export 'domain/utils/navigation.dart';
 export 'domain/utils/utils_version.dart';
+export 'domain/utils/base_cadastro_const.dart';
