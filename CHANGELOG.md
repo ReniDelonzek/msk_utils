@@ -42,3 +42,7 @@
 
 * Downgrade package_info_plus to 1.3.0 (https://github.com/fluttercommunity/plus_plugins/issues/760)
 
+## 1.0.2
+
+* Add export base_cadastro_const
+
