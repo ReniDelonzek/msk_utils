@@ -12,5 +12,10 @@ void main() {
     expect(ItemSelect().id, isNull);
     expect(ItemSelect().object, isNull);
     expect(ItemSelect().strings, Map<String, dynamic>());
+
+    /// Teste a modificabilidade do map
+    ItemSelect item = ItemSelect();
+    item.strings['a'] = 1;
+    expect(item.strings['a'], 1);
   });
 }

@@ -6,7 +6,7 @@ class ItemSelect<T> extends _ItemSelect with _$ItemSelect {
   ItemSelect(
       {int? id,
       T? object,
-      Map<String, dynamic> strings = const {},
+      Map<String, dynamic>? strings,
       bool isSelected = false,
       bool isDeleted = false})
       : super(
@@ -27,9 +27,10 @@ abstract class _ItemSelect<T> with Store {
   _ItemSelect(
       {this.id,
       this.object,
-      this.strings = const {},
+      Map<String, dynamic>? strings,
       this.isSelected = false,
-      this.isDeleted = false});
+      this.isDeleted = false})
+      : strings = strings ?? Map<String, dynamic>();
 
   int? id;
   T? object;
