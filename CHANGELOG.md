@@ -46,3 +46,6 @@
 
 * Add export base_cadastro_const
 
+## 1.0.3
+
+* Default value of map strings to be modifiable
