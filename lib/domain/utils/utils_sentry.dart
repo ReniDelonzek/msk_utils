@@ -9,8 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'utils_platform.dart';
 
 class UtilsSentry {
-  static String dsn =
-      'https://4e841b37a9f7415283450cc4157c4ce4@o408228.ingest.sentry.io/5278728';
+  static String? dsn;
   static String? package;
   static String? version;
 
