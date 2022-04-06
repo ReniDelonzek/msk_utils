@@ -49,3 +49,7 @@
 ## 1.0.3
 
 * Default value of map strings to be modifiable
+
+## 1.0.4
+
+* Fix Sentry reports
