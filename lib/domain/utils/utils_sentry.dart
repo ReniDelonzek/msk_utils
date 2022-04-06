@@ -33,8 +33,7 @@ class UtilsSentry {
     };
   }
 
-  static Future<SentryEvent> getSentryEnvEvent(
-      dynamic exception, dynamic stackTrace) async {
+  static Future<SentryEvent> getSentryEnvEvent(dynamic error) async {
     /// return Event with IOS extra information to send it to Sentry
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
@@ -113,8 +112,8 @@ class UtilsSentry {
     return SentryEvent(
         release: packageInfo.version,
         environment: 'production',
-        exceptions: [exception],
-        throwable: stackTrace,
+        throwable: error,
+        timestamp: DateTime.now(),
         extra: extra);
   }
 
@@ -131,12 +130,12 @@ class UtilsSentry {
         final SentryClient sentry =
             new SentryClient(SentryOptions(dsn: dsn ?? UtilsSentry.dsn));
 
-        final SentryEvent event = await getSentryEnvEvent(error, stackTrace);
+        final SentryEvent event = await getSentryEnvEvent(error);
         if (event.extra != null) {
           event.extra!['json'] = data;
         }
         print('Sending report to sentry.io ${stackTrace.toString()}');
-        await sentry.captureEvent(event);
+        await sentry.captureEvent(event, stackTrace: stackTrace);
       } catch (e) {
         print('Sending report to sentry.io failed: $e');
         print('Original error: $error');
