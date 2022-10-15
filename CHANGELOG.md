@@ -53,3 +53,7 @@
 ## 1.0.4
 
 * Fix Sentry reports
+
+## 1.0.5
+
+* Upgrade dependencies
