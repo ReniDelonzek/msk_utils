@@ -57,3 +57,7 @@
 ## 1.0.5
 
 * Upgrade dependencies
+
+## 2.0.0
+
+* Upgrade dart 3.0
