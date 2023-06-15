@@ -79,7 +79,7 @@ class UtilsSentry {
       });
     } else if (UtilsPlatform.isMacos) {
       final MacOsDeviceInfo macOsDeviceInfo = await deviceInfo.macOsInfo;
-      extra.addAll(macOsDeviceInfo.toMap());
+      extra.addAll(macOsDeviceInfo.data);
     } else if (UtilsPlatform.isWindows) {
       final WindowsDeviceInfo windowsDeviceInfo = await deviceInfo.windowsInfo;
       extra.addAll({
