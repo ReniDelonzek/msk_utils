@@ -38,7 +38,7 @@ class UtilsSentry {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
     Map<String, dynamic> extra = {
-      'platform': Platform.operatingSystem,
+      'platform': UtilsPlatform.isWeb ? '' : Platform.operatingSystem,
       'version': UtilsSentry.version,
       'package': package
     };

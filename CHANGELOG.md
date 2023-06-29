@@ -61,3 +61,7 @@
 ## 2.0.0
 
 * Upgrade dart 3.0
+
+## 2.0.1
+
+* Fix sentry web report
