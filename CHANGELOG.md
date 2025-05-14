@@ -65,3 +65,7 @@
 ## 2.0.1
 
 * Fix sentry web report
+
+## 2.1.0
+
+* Update dependencies
